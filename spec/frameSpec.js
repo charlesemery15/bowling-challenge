@@ -13,4 +13,10 @@ describe('Frame', function (){
     frame.bowl(7)
     expect(frame.bowlCount.length).toEqual(1);
   });
+
+  it('should limit number of bowls in a frame', function(){
+    frame.bowl(3)
+    frame.bowl(4)
+    expect(function(){frame.bowl(3)}).toThrowError('Max balls bowld in frame')
+  });
 });
