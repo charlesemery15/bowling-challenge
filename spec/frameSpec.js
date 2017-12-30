@@ -15,8 +15,12 @@ describe('Frame', function (){
   });
 
   it('should limit number of bowls in a frame', function(){
-    frame.bowl(3)
-    frame.bowl(4)
+    frame.bowl(5)
+    frame.bowl(5)
     expect(function(){frame.bowl(3)}).toThrowError('Max balls bowld in frame')
   });
+
+  // it('should limit maximum pins knocked down to 10', function(){
+  //   expect(function(){frame.bowl(11)}).toThrowError('Maximum number of pins have been knocked down')
+  // });
 });
