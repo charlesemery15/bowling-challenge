@@ -8,4 +8,5 @@ describe('Game', function() {
   it('should start game with 10 empty frames', function() {
     expect(game.frames.length).toEqual(10);
   });
+
 });
