@@ -5,22 +5,53 @@ describe('Frame', function (){
     frame = new Frame()
   });
 
-  it('should start with a 0 count', function(){
-    expect(frame.bowlCount.length).toEqual(0);
+  it('should start a frame with no knocked pins', function() {
+    expect(frame.totalKnockedPins).toEqual(0);
   });
 
-  it('should allow a player to record a bowl', function(){
-    frame.bowl(7)
-    expect(frame.bowlCount.length).toEqual(1);
+  it('should start a frame with a zero bowl count', function(){
+    expect(frame.bowlCount).toEqual(0);
   });
 
-  it('should limit number of bowls in a frame', function(){
-    frame.bowl(5)
-    frame.bowl(5)
-    expect(function(){frame.bowl(3)}).toThrowError('Max balls bowld in frame')
+  it('should be say which frame you are playing', function(){
+    expect(frame.frameIndex).toEqual(1);
   });
 
-  // it('should limit maximum pins knocked down to 10', function(){
-  //   expect(function(){frame.bowl(11)}).toThrowError('Maximum number of pins have been knocked down')
-  // });
+  it('should record increase bowlCount after every bowl', function(){
+    frame.knocked(5)
+    expect(frame.bowlCount).toEqual(1);
+  });
+
+  it('should end a frame after two bowls', function(){
+    frame.knocked(3)
+    frame.knocked(2)
+    expect(frame.end()).toBe(true);
+  });
+
+  it('should record a strike if 10 pins are knocked', function(){
+    frame.knocked(10)
+    expect(frame.aStrike()).toBe(true);
+  });
+
+  it('should return false when there was less than 10 knocked pins recorded', function(){
+    frame.knocked(9)
+    expect(frame.aStrike()).toBe(false);
+  });
+
+  it('should end frame when a strike happens', function(){
+    frame.knocked(10)
+    expect(frame.end()).toBe(true)
+  });
+
+  it('should record a spare when 10 pins are knocked with two bowls', function(){
+    frame.knocked(7)
+    frame.knocked(3)
+    expect(frame.aSpare()).toBe(true)
+  });
+
+  it('should return false when less than 10 pins are knocked with two bowls', function(){
+    frame.knocked(6)
+    frame.knocked(3)
+    expect(frame.aSpare()).toBe(false)
+  });
 });
